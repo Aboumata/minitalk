@@ -7,10 +7,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-// Server
 void	handle_signal(int sig, siginfo_t *info, void *context);
 
-// Client
 void	send_bit(int pid, char bit);
 void	send_char(int pid, char c);
 void	send_message(int pid, char *str);
