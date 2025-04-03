@@ -12,7 +12,7 @@ typedef struct {
 
 static t_server_state state = {.buffer = {0}, .index = 0, .client_pid = 0, .current_char = 0, .bit_count = 0};
 
-void handle_signal(int sig, siginfo_t *info, void *context) {
+void handle_signal(int sig, const siginfo_t *info, const void *context) {
     (void)context;
 
     if (state.client_pid != info->si_pid) {

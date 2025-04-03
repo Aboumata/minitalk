@@ -2,12 +2,12 @@
 
 volatile sig_atomic_t g_ack_received = 0;
 
-void ack_handler(int sig) {
+void ack_handler(const int sig) {
     (void)sig;
     g_ack_received = 1;
 }
 
-void send_bit(int pid, char bit) {
+void send_bit(const int pid, const char bit) {
     sigset_t mask, old_mask;
 
     sigemptyset(&mask);
@@ -23,13 +23,13 @@ void send_bit(int pid, char bit) {
     sigprocmask(SIG_SETMASK, &old_mask, NULL);
 }
 
-void send_char(int pid, char c) {
+void send_char(const int pid, const char c) {
     int i = 8;
     while (i--)
         send_bit(pid, (c >> (7 - i)) & 1);
 }
 
-void send_message(int pid, char *str) {
+void send_message(const int pid, const char *str) {
     struct sigaction sa;
 
     sa.sa_handler = ack_handler;
