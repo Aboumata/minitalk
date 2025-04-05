@@ -1,22 +1,22 @@
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
-SERVER	= server
-SRC_S	= server.c
+NAME_SERVER	= server
+NAME_CLIENT	= client
 
-CLIENT	= client
-SRC_C	= client.c
+SRC_SERVER	= server.c
+SRC_CLIENT	= client.c ft_atoi.c
 
-all: $(SERVER) $(CLIENT)
+all: $(NAME_SERVER) $(NAME_CLIENT)
 
-$(SERVER):
-	$(CC) $(CFLAGS) $(SRC_S) -o $@
+$(NAME_SERVER):
+	$(CC) $(CFLAGS) $(SRC_SERVER) -o $(NAME_SERVER)
 
-$(CLIENT):
-	$(CC) $(CFLAGS) $(SRC_C) -o $@
+$(NAME_CLIENT):
+	$(CC) $(CFLAGS) $(SRC_CLIENT) -o $(NAME_CLIENT)
 
 clean:
-	rm -f $(SERVER) $(CLIENT)
+	rm -f $(NAME_SERVER) $(NAME_CLIENT)
 
 fclean: clean
 
