@@ -12,49 +12,52 @@
 
 #include "minitalk.h"
 
-#define BUFFER_SIZE 1024
+static t_server_state	g_state;
 
-typedef struct {
-	char    buffer[BUFFER_SIZE];
-	int     index;
-	pid_t   client_pid;
-	char    current_char;
-	int     bit_count;
-} t_server_state;
+static void	reset_client_state(pid_t new_pid)
+{
+	g_state.client_pid = new_pid;
+	g_state.current_char = 0;
+	g_state.bit_count = 0;
+	g_state.index = 0;
+}
 
-static t_server_state state = {.buffer = {0}, .index = 0, .client_pid = 0, .current_char = 0, .bit_count = 0};
+static void	build_current_char(int sig)
+{
+	g_state.current_char |= (sig == SIGUSR2) << (7 - g_state.bit_count);
+	g_state.bit_count++;
+}
 
-void handle_signal(int sig, siginfo_t *info, void *context) {
-	(void)context;
-
-	if (state.client_pid != info->si_pid) {
-		state.client_pid = info->si_pid;
-		state.current_char = 0;
-		state.bit_count = 0;
-		state.index = 0;
+static void	process_current_char(void)
+{
+	if (g_state.current_char == '\0')
+	{
+		write(STDOUT_FILENO, g_state.buffer, g_state.index);
+		write(STDOUT_FILENO, "\n", 1);
+		g_state.index = 0;
 	}
-
-	state.current_char |= (sig == SIGUSR2) << (7 - state.bit_count);
-	state.bit_count++;
-
-	if (state.bit_count == 8) {
-		if (state.current_char == '\0') {
-			write(STDOUT_FILENO, state.buffer, state.index);
-			write(STDOUT_FILENO, "\n", 1);
-			state.index = 0;
-		} else {
-			// Flush buffer if full
-			if (state.index >= BUFFER_SIZE) {
-				write(STDOUT_FILENO, state.buffer, BUFFER_SIZE);
-				state.index = 0;
-			}
-			state.buffer[state.index++] = state.current_char;
+	else
+	{
+		if (g_state.index >= BUFFER_SIZE)
+		{
+			write(STDOUT_FILENO, g_state.buffer, BUFFER_SIZE);
+			g_state.index = 0;
 		}
-		state.current_char = 0;
-		state.bit_count = 0;
+		g_state.buffer[g_state.index++] = g_state.current_char;
 	}
+	g_state.current_char = 0;
+	g_state.bit_count = 0;
+}
 
-	kill(state.client_pid, SIGUSR1);
+void	handle_signal(int sig, siginfo_t *info, void *context)
+{
+	(void)context;
+	if (g_state.client_pid != info->si_pid)
+		reset_client_state(info->si_pid);
+	build_current_char(sig);
+	if (g_state.bit_count == 8)
+		process_current_char();
+	kill(g_state.client_pid, SIGUSR1);
 }
 
 int	main(void)
@@ -70,4 +73,5 @@ int	main(void)
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 		pause();
+	return (0);
 }
