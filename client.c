@@ -70,6 +70,6 @@ int	main(int argc, char **argv)
 		write(STDOUT_FILENO, "Usage: ./client [server_pid] [message]\n", 38);
 		return (1);
 	}
-	send_message(ft_atoi(argv[1], valid), argv[2]);
+	send_message(ft_atoi(argv[1], &valid), argv[2]);
 	return (0);
 }
