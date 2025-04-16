@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 #include "minitalk.h"
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, int *valid)
 {
-    int	num;
-    int	sign;
+    long	num;
+    int	    sign;
 
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
@@ -30,7 +30,12 @@ int	ft_atoi(const char *str)
     {
         num *= 10;
         num += (*str - '0');
+        if ((num * sign) > INT_MAX || (num * sign) < INT_MIN)
+        {
+            *valid = 0;
+            return (0);
+        }
         str++;
     }
-    return (num * sign);
+    return (int)(num * sign);
 }

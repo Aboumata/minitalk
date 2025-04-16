@@ -62,11 +62,14 @@ void	send_message(int pid, const char *str)
 
 int	main(int argc, char **argv)
 {
+	int *valid;
+
+	valid = 1;
 	if (argc != 3)
 	{
 		write(STDOUT_FILENO, "Usage: ./client [server_pid] [message]\n", 38);
 		return (1);
 	}
-	send_message(ft_atoi(argv[1]), argv[2]);
+	send_message(ft_atoi(argv[1], valid), argv[2]);
 	return (0);
 }
