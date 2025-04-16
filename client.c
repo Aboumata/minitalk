@@ -62,7 +62,7 @@ void	send_message(int pid, const char *str)
 
 int	main(int argc, char **argv)
 {
-	int *valid;
+	int valid;
 
 	valid = 1;
 	if (argc != 3)
