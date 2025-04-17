@@ -64,8 +64,10 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	printf("Server PID: %d\n", getpid());
-	fflush(stdout);
+	write(STDOUT_FILENO, "Server PID: ", 12);
+	ft_putnbr_fd(getpid(), STDOUT_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
+
 	sa.sa_sigaction = handle_signal;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
@@ -75,3 +77,4 @@ int	main(void)
 		pause();
 	return (0);
 }
+
