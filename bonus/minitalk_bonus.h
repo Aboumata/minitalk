@@ -32,4 +32,4 @@ int			ft_atoi(const char *str, int *valid);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putchar_fd(char c, int fd);
 
-#endif // MINITALK_BONUS_H
+#endif
