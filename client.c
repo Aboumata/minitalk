@@ -40,7 +40,9 @@ void	send_bit(int pid, char bit)
 
 void	send_char(int pid, char c)
 {
-	int	i = 8;
+	int	i;
+
+	i = 8;
 	while (i-- > 0)
 		send_bit(pid, (c >> i) & 1);
 }
@@ -60,8 +62,9 @@ void	send_message(int pid, const char *str)
 
 int	main(int argc, char **argv)
 {
-	int	valid = 1;
+	int	valid;
 
+	valid = 1;
 	if (argc != 3)
 	{
 		write(STDOUT_FILENO, "Usage: ./client [server_pid] [message]\n", 38);

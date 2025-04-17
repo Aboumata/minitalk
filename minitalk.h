@@ -14,8 +14,8 @@
 # define MINITALK_H
 
 # define _XOPEN_SOURCE 700
-# include <signal.h>
 # include <limits.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
