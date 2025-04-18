@@ -31,7 +31,7 @@ typedef struct s_server_state
 	int		bit_count;
 }			t_server_state;
 
-void		handle_signal(int sig, siginfo_t *info, void *context);
+void		handle_signal(int sig);
 void		send_bit(int pid, char bit);
 void		send_char(int pid, char c);
 void		send_message(int pid, const char *str);
