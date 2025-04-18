@@ -62,6 +62,7 @@ void	send_message(int pid, const char *str)
 
 int	main(int argc, char **argv)
 {
+	int	pid;
 	int	valid;
 
 	valid = 1;
@@ -70,6 +71,12 @@ int	main(int argc, char **argv)
 		write(STDOUT_FILENO, "Usage: ./client [server_pid] [message]\n", 38);
 		return (1);
 	}
-	send_message(ft_atoi(argv[1], &valid), argv[2]);
+	pid = ft_atoi(argv[1], &valid);
+	if (!valid || pid <= 0)
+	{
+		ft_putstr_fd("Error: Invalid PID.\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	send_message(pid, argv[2]);
 	return (0);
 }

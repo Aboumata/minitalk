@@ -62,15 +62,20 @@ void	send_message(int pid, const char *str)
 
 int	main(int argc, char **argv)
 {
+	int	pid;
 	int	valid;
 
-	valid = 1;
 	if (argc != 3)
 	{
-		write(STDOUT_FILENO, "Usage: ./client_bonus [server_pid] [message]\n",
-			46);
+		write(STDOUT_FILENO, "Usage: ./client_bonus [server_pid] [message]\n", 46);
 		return (1);
 	}
-	send_message(ft_atoi(argv[1], &valid), argv[2]);
+	pid = ft_atoi(argv[1], &valid);
+	if (!valid || pid <= 0)
+	{
+		ft_putstr_fd("Error: Invalid PID.\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	send_message(pid, argv[2]);
 	return (0);
 }
