@@ -14,6 +14,13 @@
 # define MINITALK_BONUS_H
 
 # define BUFFER_SIZE 1024
+# define _XOPEN_SOURCE 700
+# include <limits.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+
 
 typedef struct s_server_state
 {
