@@ -20,11 +20,12 @@ int	ft_atoi(const char *str, int *valid)
 	sign = 1;
 	i = 0;
 	*valid = 1;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
 	if (str[i] == '+' || str[i] == '-')
 	{
-		if (str[i] == '-')
+		if (str[i++] == '-')
 			sign = -1;
-		i++;
 	}
 	if (str[i] == '\0')
 		return (*valid = 0, 0);
