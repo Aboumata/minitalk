@@ -31,13 +31,11 @@ typedef struct s_server_state
 	int		bit_count;
 }			t_server_state;
 
-void		handle_signal(int sig);
+void		handle_signal(int sig, siginfo_t *info, void *context);
 void		send_bit(int pid, char bit);
 void		send_char(int pid, char c);
 void		send_message(int pid, const char *str);
 int			ft_atoi(const char *str, int *valid);
 void		ft_putnbr_fd(int n, int fd);
-void		ft_putchar_fd(char c, int fd);
-void		ft_putstr_fd(char *s, int fd);
 
 #endif

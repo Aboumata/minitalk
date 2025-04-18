@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include "bonus/minitalk_bonus.h"
 
 volatile sig_atomic_t	g_ack_received = 0;
 
@@ -62,8 +63,8 @@ void	send_message(int pid, const char *str)
 
 int	main(int argc, char **argv)
 {
-	int	pid;
 	int	valid;
+	int pid;
 
 	valid = 1;
 	if (argc != 3)
@@ -72,7 +73,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	pid = ft_atoi(argv[1], &valid);
-	if (!valid || pid <= 0)
+	if (!valid || pid <= 0 || kill(pid, 0) == -1)
 	{
 		ft_putstr_fd("Error: Invalid PID.\n", 2);
 		exit(EXIT_FAILURE);
