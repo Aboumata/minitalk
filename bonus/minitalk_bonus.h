@@ -21,7 +21,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-
 typedef struct s_server_state
 {
 	char	buffer[BUFFER_SIZE];

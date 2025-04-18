@@ -15,28 +15,27 @@
 int	ft_atoi(const char *str, int *valid)
 {
 	long	result;
-	int		sign;
 
+	int (sign), i;
 	result = 0;
 	sign = 1;
+	i = 0;
 	*valid = 1;
-	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
-		str++;
-	if (*str == '-' || *str == '+')
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (*str == '-')
+		if (str[i] == '-')
 			sign = -1;
-		str++;
+		i++;
 	}
-	while (*str >= '0' && *str <= '9')
+	if (str[i] == '\0')
+		return (*valid = 0, 0);
+	while (str[i])
 	{
-		result = result * 10 + (*str - '0');
-		if ((sign == 1 && result > INT_MAX) || (sign == -1
-				&& result > (long)INT_MAX + 1))
+		if (str[i] < '0' || str[i] > '9')
 			return (*valid = 0, 0);
-		str++;
+		result = result * 10 + (str[i++] - '0');
+		if (result > INT_MAX || result < INT_MIN)
+			return (*valid = 0, 0);
 	}
-	if (*str != '\0')
-		*valid = 0;
 	return ((int)(result * sign));
 }
