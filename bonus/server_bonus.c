@@ -20,7 +20,6 @@ static void	reset_client_state(pid_t new_pid)
 	g_state.current_char = 0;
 	g_state.bit_count = 0;
 	g_state.index = 0;
-	write(STDOUT_FILENO, "\n[New client connected] PID: ", 30);
 	ft_putnbr_fd(new_pid, STDOUT_FILENO);
 	write(STDOUT_FILENO, "\n", 1);
 }
@@ -36,7 +35,6 @@ static void	process_current_char(void)
 	if (g_state.current_char == '\0')
 	{
 		write(STDOUT_FILENO, g_state.buffer, g_state.index);
-		write(STDOUT_FILENO, "\n[Message ended]\n", 17);
 		g_state.index = 0;
 	}
 	else

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include "bonus/minitalk_bonus.h"
 
 volatile sig_atomic_t	g_ack_received = 0;
 
